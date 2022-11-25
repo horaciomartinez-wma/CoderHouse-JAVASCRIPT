@@ -11,13 +11,17 @@ class Socio {
 	}
 }
 
+/*
 new Socio("Sylvester", "Stallone", "06/07/1946");
 new Socio("Arnold", "Schwarzenegger", "30/07/1947");
 new Socio("Ronnie", "Coleman", "13/05/1964");
 new Socio("Dwayne La Roca", "Johnson", "02/05/1972");
 new Socio("John", "Cena", "23/04/1977");
-
+*/
 console.log(arraySocios);
+
+let nombreFormulario = document.getElementById("firstName");
+console.log(nombreFormulario);
 
 const mostrarListaDeSociosOrdenada = () => {
 	let array = [];

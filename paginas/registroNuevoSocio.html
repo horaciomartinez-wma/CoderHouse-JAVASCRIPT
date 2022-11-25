@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Bootstrap -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+			crossorigin="anonymous"
+		/>
+		<!-- Estilos -->
+		<link rel="stylesheet" href="../estilos/style.css" />
+
+		<title>Document</title>
+	</head>
+	<header>
+		<nav class="navbar navbar-dark bg-dark">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="../index.html">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="./ingresoSocio.html">Ingreso Socio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="../paginas/registroNuevoSocio.html"
+						>Registrar nuevo socio</a
+					>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="./index.html">Pagar subscripcion (no activa)</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="../paginas/listaSocio.html">Mostrar lista de socios</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	<body>
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Ingrese los datos para el prestamo</h4>
+            <form class="needs-validation"  id="registrationForm" novalidate>
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="firstName" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="firstName"  name="firstName" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid first name is required.
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="lastName" class="form-label">Apellido</label>
+                  <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid last name is required.
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+                  <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                  <div class="invalid-feedback">
+                    Please enter a valid email address for shipping updates.
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="birthdayDate" class="form-label">Fecha De nacimiento</label>
+                  <input type="text" class="form-control" id="birthdayDate" name="birthdayDate" placeholder="MM/DD/AAAA">
+                  <div class="invalid-feedback">
+                    <!-- Please enter a valid email address for shipping updates. -->
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="phoneNumber" class="form-label">Telefono</label>
+                  <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="">
+                  <div class="invalid-feedback">
+                    <!-- Please enter a valid email address for shipping updates. -->
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="profilepicURL" class="form-label">Imagen de Perfil</label>
+                  <input type="text" class="form-control" id="profilepicURL" name="profilepicURL" placeholder="Ingresa una URL de una imagen para tu perfil">
+                  <div class="invalid-feedback">
+                    <!-- Please enter a valid email address for shipping updates. -->
+                  </div>
+                </div>
+                
+
+              <hr class="my-4">
+
+              <input class="w-100 btn btn-primary btn-lg" type="submit" value="Submit">
+            </form>
+          </div>
+
+							
+								<!-- Sweetalert -->
+								<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+								<script src="../socios.js"></script>
+								<script src="../formulario.js"></script>
+				
+	</body>
+</html>

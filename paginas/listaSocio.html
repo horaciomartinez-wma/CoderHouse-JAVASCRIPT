@@ -36,8 +36,30 @@
 			</ul>
 		</nav>
 	</header>
+
 	<body>
+		<div class="nav-wrapper">
+			<form>
+				<div class="input-field">
+					<input id="search" type="search" required />
+					<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+					<i class="material-icons">close</i>
+				</div>
+			</form>
+		</div>
+
+		<label for="orden">Ordernar por:</label>
+		<select id="ordenar" class="ordenar">
+			<option selected="selected" value="AntiguedadDesc">Antiguedad Mayor → Menor</option>
+			<!-- <option value="socioAntiguos">Antiguedad Mayor → Menor</option> -->
+			<option value="nombreAscendente">Nombre A → Z</option>
+			<option value="nombreDescendente">Nombre Z → A</option>
+			<option value="apellidoAscendente">Apellido A → Z</option>
+			<option value="apellidoDescendente">Apellido Z → A</option>
+		</select>
+
 		<main id="socios-contenedor"></main>
+
 		<script src="../socios.js"></script>
 		<script src="../llenarlistasocios.js"></script>
 		<script src="https://kit.fontawesome.com/df59baf6b8.js" crossorigin="anonymous"></script>

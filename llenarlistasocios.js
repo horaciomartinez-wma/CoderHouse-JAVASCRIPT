@@ -1,27 +1,130 @@
-// let tarjeta = document.createElement("div");
-// tarjeta.className = "card-group";
+let arrayOrdenado = [];
+class socioOrdenado {
+	constructor(socioNumber, nombre, apellidos, imagenPerfilURL) {
+		this.socioNumber = socioNumber;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.imagenPerfilURL = imagenPerfilURL;
+		arrayOrdenado.push(this);
+	}
+}
 
-// arraySocios.forEach((socio) => {
-// 	tarjeta.innerHTML += `<div class="card">
-//     <img class="card-img-top" src="../imagenes/1.jpeg" height="300px" width="200px" alt="Card image cap" />
+let arrayFiltrado = [];
+class socioFiltrado {
+	constructor(socioNumber, nombre, apellidos, imagenPerfilURL) {
+		this.socioNumber = socioNumber;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.imagenPerfilURL = imagenPerfilURL;
+		arrayFiltrado.push(this);
+	}
+}
 
-// 				<div class="card-body">
-// 					<h5 class="card-title" id="card1">${socio.nombre} ${socio.apellidos}</h5>
-// 					<p class="card-text">
-// 						This is a wider card with supporting text below as a natural lead-in to additional content. This content is
-// 						a little bit longer.
-// 					</p>
-// 					<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-// 				</div>
-//                 </div>`;
-// });
+const barraDeBusqueda = document.getElementById("search");
 
-//document.body.appendChild(tarjeta);
+barraDeBusqueda.addEventListener("input", ejecutarBusqueda);
 
-const pintarSocios = () => {
+function ejecutarBusqueda(e) {
+	arrayFiltrado = [];
+	console.log(e.target.value);
+	for (i = 0; i < arraySocios.length; i++) {
+		let string = arraySocios[i].nombre.toUpperCase() + " " + arraySocios[i].apellidos.toUpperCase();
+		let stringBuscado = e.target.value;
+		console.log(string.indexOf(stringBuscado.toUpperCase()));
+		if (string.indexOf(stringBuscado.toUpperCase()) > -1) {
+			console.log(arraySocios[i].nombre + " " + arraySocios[i].apellidos);
+			new socioFiltrado(
+				arraySocios[i].socioNumber,
+				arraySocios[i].nombre,
+				arraySocios[i].apellidos,
+				arraySocios[i].imagenPerfilURL
+			);
+		}
+	}
+	pintarSocios(arrayFiltrado);
+	escucharBotones(arrayFiltrado);
+}
+
+const ordenarAntiguedadDesc = () => {
+	//LIMPIAR EL ARRAY ORDENADO
+	arrayOrdenado = [];
+
+	//LLENAR EL ARRAY ORDENADO POR NOMBRE
+	arraySocios.sort((a, b) => a.socioNumber - b.socioNumber);
+	arraySocios.forEach(
+		(socio) => new socioOrdenado(socio.socioNumber, socio.nombre, socio.apellidos, socio.imagenPerfilURL)
+	);
+
+	pintarSocios(arrayOrdenado);
+	escucharBotones(arrayOrdenado);
+};
+
+const ordenarNombreAscendente = () => {
+	//LIMPIAR EL ARRAY ORDENADO
+	arrayOrdenado = [];
+
+	//LLENAR EL ARRAY ORDENADO POR NOMBRE
+	arraySocios.sort((a, b) => a.nombre.localeCompare(b.nombre));
+	arraySocios.forEach(
+		(socio) => new socioOrdenado(socio.socioNumber, socio.nombre, socio.apellidos, socio.imagenPerfilURL)
+	);
+	pintarSocios(arrayOrdenado);
+	escucharBotones(arrayOrdenado);
+};
+
+const ordenarNombreDescendente = () => {
+	//LIMPIAR EL ARRAY ORDENADO
+	arrayOrdenado = [];
+
+	//LLENAR EL ARRAY ORDENADO POR NOMBRE
+	arraySocios.sort((a, b) => b.nombre.localeCompare(a.nombre));
+	arraySocios.forEach(
+		(socio) => new socioOrdenado(socio.socioNumber, socio.nombre, socio.apellidos, socio.imagenPerfilURL)
+	);
+
+	pintarSocios(arrayOrdenado);
+	escucharBotones(arrayOrdenado);
+};
+
+const ordenarApellidoAscendente = () => {
+	//LIMPIAR EL ARRAY ORDENADO
+	arrayOrdenado = [];
+
+	//LLENAR EL ARRAY ORDENADO POR NOMBRE
+	arraySocios.sort((a, b) => a.apellidos.localeCompare(b.apellidos));
+	arraySocios.forEach(
+		(socio) => new socioOrdenado(socio.socioNumber, socio.nombre, socio.apellidos, socio.imagenPerfilURL)
+	);
+
+	pintarSocios(arrayOrdenado);
+	escucharBotones(arrayOrdenado);
+};
+
+const ordenarApellidoDescendente = () => {
+	//LIMPIAR EL ARRAY ORDENADO
+	arrayOrdenado = [];
+
+	//LLENAR EL ARRAY ORDENADO POR NOMBRE
+	arraySocios.sort((a, b) => b.apellidos.localeCompare(a.apellidos));
+	arraySocios.forEach(
+		(socio) => new socioOrdenado(socio.socioNumber, socio.nombre, socio.apellidos, socio.imagenPerfilURL)
+	);
+
+	pintarSocios(arrayOrdenado);
+	escucharBotones(arrayOrdenado);
+};
+
+const pintarSocios = (array) => {
+	//LIMPIAR LOS DIV'S ANTERIORES
 	const contenedor = document.getElementById("socios-contenedor");
+	while (contenedor.firstChild) {
+		contenedor.removeChild(contenedor.firstChild);
+	}
 
-	arraySocios.forEach((socio) => {
+	lista = array || arraySocios;
+	console.log(lista);
+
+	lista.forEach((socio) => {
 		const div = document.createElement("div");
 		div.classList.add("card");
 		div.innerHTML += `
@@ -40,25 +143,61 @@ const pintarSocios = () => {
 
 pintarSocios();
 
+escucharBotones();
+
 /******************Escuchar botones Borrar ***********************/
 
-//Traer todos los botones
-const botones = document.getElementsByTagName("button");
+function escucharBotones() {
+	//
+	if (arrayOrdenado.length === 0) {
+		lista = arraySocios;
+	} else {
+		lista = arrayOrdenado;
+	}
+	//Traer todos los botones
+	const botones = document.getElementsByTagName("button");
 
-//Iterar para escuchar a todos los botones
-for (i = 0; i < botones.length; i++) {
-	const boton = document.getElementById(botones[i].id);
+	//Iterar para escuchar a todos los botones
+	for (i = 0; i < botones.length; i++) {
+		const boton = document.getElementById(botones[i].id);
 
-	boton.addEventListener("click", (e) => {
-		//Recorrer el array para borrar el objecto especifico
-		for (i = 0; i < arraySocios.length; i++) {
-			if (arraySocios[i].nombre + arraySocios[i].apellidos == boton.id) {
-				console.log(arraySocios[i].nombre);
-				arraySocios.splice(i, 1);
-				localStorage.setItem("stringSocios", JSON.stringify(arraySocios));
-				location.reload();
-				break;
+		boton.addEventListener("click", (e) => {
+			//RECORRER EL ARRAY HASTA ENCONTRAR EL OBJECTO
+			for (i = 0; i < lista.length; i++) {
+				if (lista[i].nombre + lista[i].apellidos == boton.id) {
+					//REMOVER EL OBJECTO DEL ARRAY
+					lista.splice(i, 1);
+					//ACTUALIZAR LOCALSTORAGE
+					localStorage.setItem("stringSocios", JSON.stringify(lista));
+					//REFRESCAR PAGINA
+					location.reload();
+					break;
+				}
 			}
-		}
-	});
+		});
+	}
 }
+
+/***************************Opciones Ordenar *********************************/
+
+const tipoDeOrdenamiento = document.querySelector(".ordenar");
+
+tipoDeOrdenamiento.addEventListener("change", (e) => {
+	switch (e.target.value) {
+		case "AntiguedadDesc":
+			ordenarAntiguedadDesc();
+			break;
+		case "nombreAscendente":
+			ordenarNombreAscendente();
+			break;
+		case "nombreDescendente":
+			ordenarNombreDescendente();
+			break;
+		case "apellidoAscendente":
+			ordenarApellidoAscendente();
+			break;
+		case "apellidoDescendente":
+			ordenarApellidoDescendente();
+			break;
+	}
+});

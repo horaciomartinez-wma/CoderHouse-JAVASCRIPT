@@ -5,17 +5,12 @@ const getTaskStorage = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-	console.log(arraySocios);
-
-	//arraySocios = getTaskStorage();
 	localStorage.setItem("stringSocios", JSON.stringify(getTaskStorage()));
-	console.log(getTaskStorage());
 });
 
 class Socio {
 	constructor(nombre, apellidos, fechaNacimiento, telefono, imagenPerfilURL) {
 		this.socioNumber = arraySocios.length + 1;
-
 		this.nombre = nombre.toUpperCase();
 		this.apellidos = apellidos.toUpperCase();
 		this.fechaNacimiento = fechaNacimiento;
@@ -63,13 +58,9 @@ formulario.addEventListener("submit", (e) => {
 			reverseButtons: false,
 		})
 		.then((result) => {
+			//if (result.isConfirmed && !buscarSocio(nombre, apellidos)) {
 			if (result.isConfirmed) {
-				new Socio(nombre, apellidos, fechaNacimiento, telefono, imagenPerfilURL);
-				swalWithBootstrapButtons.fire(`Bienvenido ${nombre}, tu numero de Socio es: ${arraySocios.length}`);
-				localStorage.setItem("stringSocios", JSON.stringify(arraySocios));
-				formulario.reset();
-				//console.log(stringSocios);
-				//console.log(getTaskStorage());
+				buscarSocio(nombre, apellidos, fechaNacimiento, telefono, imagenPerfilURL);
 			} else if (
 				/* Read more about handling dismissals below */
 				result.dismiss === Swal.DismissReason.cancel
@@ -80,3 +71,51 @@ formulario.addEventListener("submit", (e) => {
 
 	/*****************************Sweet alert bloque fin **********************/
 });
+
+function validarNuevoSocio(nombre, apellidos) {
+	return arraySocios.find(
+		(o) => o.nombre.toUpperCase() == nombre.toUpperCase() && o.apellidos.toUpperCase() == apellidos.toUpperCase()
+	)
+		? true
+		: false;
+}
+
+async function obtenerSocios() {
+	let obj;
+	const res = await fetch("https://comfy-sunshine-732099.netlify.app/.netlify/functions/hello");
+	return JSON.parse(localStorage.getItem("stringSocios")) || (await res.json());
+}
+
+async function buscarSocio(nombre, apellidos, fechaNacimiento, telefono, imagenPerfilURL) {
+	const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: "btn btn-success",
+			cancelButton: "btn btn-danger",
+		},
+		buttonsStyling: false,
+	});
+	arraySocios = await obtenerSocios();
+
+	// CAMBIO a IF ternario
+	// if (
+	// 	await arraySocios.find(
+	// 		(o) => o.nombre.toUpperCase() == nombre.toUpperCase() && o.apellidos.toUpperCase() == apellidos.toUpperCase()
+	// 	)
+	// ) {
+	// 	swalWithBootstrapButtons.fire("Ya existe un socio registrado con esos datos, por favor revisa de nuevo");
+	// } else {
+	// 	new Socio(nombre, apellidos, fechaNacimiento, telefono, imagenPerfilURL),
+	// 		swalWithBootstrapButtons.fire(`Bienvenido ${nombre}, tu numero de Socio es: ${arraySocios.length}`),
+	// 		localStorage.setItem("stringSocios", JSON.stringify(arraySocios)),
+	// 		formulario.reset();
+	// }
+
+	(await arraySocios.find(
+		(o) => o.nombre.toUpperCase() == nombre.toUpperCase() && o.apellidos.toUpperCase() == apellidos.toUpperCase()
+	))
+		? swalWithBootstrapButtons.fire("Ya existe un socio registrado con esos datos, por favor revisa de nuevo")
+		: (new Socio(nombre, apellidos, fechaNacimiento, telefono, imagenPerfilURL),
+		  swalWithBootstrapButtons.fire(`Bienvenido ${nombre}, tu numero de Socio es: ${arraySocios.length}`),
+		  localStorage.setItem("stringSocios", JSON.stringify(arraySocios)),
+		  formulario.reset());
+}

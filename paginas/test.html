@@ -5,120 +5,63 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<!-- Bootstrap -->
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-			crossorigin="anonymous"
-		/>
-		<!-- Estilos -->
-		<link rel="stylesheet" href="../estilos/style.css" />
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link rel="stylesheet" href="../estilos/style_llenarLista.css" />
 
 		<title>Document</title>
 	</head>
+	<header>
+		<nav class="navbar navbar-dark bg-dark">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="../index.html">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="./ingresoSocio.html">Ingreso Socio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="../paginas/registroNuevoSocio.html"
+						>Registrar nuevo socio</a
+					>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="./index.html">Pagar subscripcion (no activa)</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="../paginas/listaSocio.html">Mostrar lista de socios</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
 	<body>
-		<!-- Sweetalert -->
-		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<div class="nav-wrapper">
+			<form>
+				<div class="input-field">
+					<input id="search" type="search" required />
+					<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+					<i class="material-icons">close</i>
+				</div>
+			</form>
+		</div>
+
+		<label for="orden">Ordernar por:</label>
+		<select id="ordenar" class="ordenar">
+			<option selected="selected" value="AntiguedadDesc">Antiguedad Mayor → Menor</option>
+			<!-- <option value="socioAntiguos">Antiguedad Mayor → Menor</option> -->
+			<option value="nombreAscendente">Nombre A → Z</option>
+			<option value="nombreDescendente">Nombre Z → A</option>
+			<option value="apellidoAscendente">Apellido A → Z</option>
+			<option value="apellidoDescendente">Apellido Z → A</option>
+		</select>
+
+		<main id="socios-contenedor"></main>
 
 		<script src="../socios.js"></script>
 		<script src="../test.js"></script>
-
-		<form id="registrationForm">
-			<div class="row">
-				<div class="col-md-6 mb-4">
-					<div class="form-outline">
-						<input type="text" id="firstName" name="firstName" class="form-control form-control-lg" />
-						<label class="form-label" for="firstName">First Name</label>
-					</div>
-				</div>
-				<div class="col-md-6 mb-4">
-					<div class="form-outline">
-						<input type="text" id="lastName" name="lastName" class="form-control form-control-lg" />
-						<label class="form-label" for="lastName">Last Name</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 mb-4 d-flex align-items-center">
-					<div class="form-outline datepicker w-100">
-						<input type="text" class="form-control form-control-lg" id="birthdayDate" name="birthdayDate" />
-						<label for="birthdayDate" class="form-label">Birthday</label>
-					</div>
-				</div>
-				<div class="col-md-6 mb-4">
-					<h6 class="mb-2 pb-1">Gender:</h6>
-
-					<div class="form-check form-check-inline">
-						<input
-							class="form-check-input"
-							type="radio"
-							name="inlineRadioOptions"
-							id="femaleGender"
-							name="femaleGender"
-							value="option1"
-							checked
-						/>
-						<label class="form-check-label" for="femaleGender">Female</label>
-					</div>
-
-					<div class="form-check form-check-inline">
-						<input
-							class="form-check-input"
-							type="radio"
-							name="inlineRadioOptions"
-							id="maleGender"
-							name="maleGender"
-							value="option2"
-						/>
-						<label class="form-check-label" for="maleGender">Male</label>
-					</div>
-
-					<div class="form-check form-check-inline">
-						<input
-							class="form-check-input"
-							type="radio"
-							name="inlineRadioOptions"
-							id="otherGender"
-							name="otherGender"
-							value="option3"
-						/>
-						<label class="form-check-label" for="otherGender">Other</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 mb-4 pb-2">
-					<div class="form-outline">
-						<input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg" />
-						<label class="form-label" for="emailAddress">Email</label>
-					</div>
-				</div>
-				<div class="col-md-6 mb-4 pb-2">
-					<div class="form-outline">
-						<input type="tel" id="phoneNumber" name="phoneNumber" class="form-control form-control-lg" />
-						<label class="form-label" for="phoneNumber">Phone Number</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-12">
-					<select class="select form-control-lg">
-						<option value="1" disabled>Choose option</option>
-						<option value="2">Subject 1</option>
-						<option value="3">Subject 2</option>
-						<option value="4">Subject 3</option>
-					</select>
-					<label class="form-label select-label">Choose option</label>
-				</div>
-			</div>
-
-			<div class="mt-4 pt-2">
-				<input class="btn btn-primary btn-lg" type="submit" value="Submit" />
-			</div>
-		</form>
+		<script src="https://kit.fontawesome.com/df59baf6b8.js" crossorigin="anonymous"></script>
 	</body>
 </html>

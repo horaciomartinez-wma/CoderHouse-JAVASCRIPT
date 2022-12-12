@@ -20,6 +20,8 @@ class socioFiltrado {
 	}
 }
 
+console.log(arraySocios);
+
 const barraDeBusqueda = document.getElementById("search");
 
 barraDeBusqueda.addEventListener("input", ejecutarBusqueda);
@@ -30,9 +32,8 @@ function ejecutarBusqueda(e) {
 	for (i = 0; i < arraySocios.length; i++) {
 		let string = arraySocios[i].nombre.toUpperCase() + " " + arraySocios[i].apellidos.toUpperCase();
 		let stringBuscado = e.target.value;
-		console.log(string.indexOf(stringBuscado.toUpperCase()));
+
 		if (string.indexOf(stringBuscado.toUpperCase()) > -1) {
-			console.log(arraySocios[i].nombre + " " + arraySocios[i].apellidos);
 			new socioFiltrado(
 				arraySocios[i].socioNumber,
 				arraySocios[i].nombre,
@@ -121,8 +122,8 @@ const pintarSocios = (array) => {
 		contenedor.removeChild(contenedor.firstChild);
 	}
 
+	//falsy
 	lista = array || arraySocios;
-	console.log(lista);
 
 	lista.forEach((socio) => {
 		const div = document.createElement("div");
@@ -148,12 +149,8 @@ escucharBotones();
 /******************Escuchar botones Borrar ***********************/
 
 function escucharBotones() {
-	//
-	if (arrayOrdenado.length === 0) {
-		lista = arraySocios;
-	} else {
-		lista = arrayOrdenado;
-	}
+	//IF TERNARIO
+	arrayOrdenado.length === 0 ? (lista = arraySocios) : (lista = arrayOrdenado);
 	//Traer todos los botones
 	const botones = document.getElementsByTagName("button");
 

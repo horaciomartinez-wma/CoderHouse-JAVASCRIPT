@@ -3,33 +3,30 @@ formulario.addEventListener("submit", (e) => {
 	e.preventDefault();
 	const form = new FormData(formulario);
 	const numeroSocio = form.get("numeroSocio");
-	console.log(numeroSocio);
-	console.log(arraySocios.length);
 
 	buscarSocio(numeroSocio);
 });
 
-function buscarSocio(numeroSocio) {
-	let nombre = "";
-	let imagenPerfilURL = "";
-	for (i = 0; i < arraySocios.length; i++) {
-		if (arraySocios[i].socioNumber == numeroSocio) {
-			//console.log(arraySocios[i].socioNumber);
-			//console.log(arraySocios[i].nombre);
-			nombre = arraySocios[i].nombre;
-			imagenPerfilURL = arraySocios[i].imagenPerfilURL;
-			break;
-		}
-	}
-	if (nombre != "") {
+async function obtenerSocios() {
+	let obj;
+	const res = await fetch("https://comfy-sunshine-732099.netlify.app/.netlify/functions/hello");
+	return JSON.parse(localStorage.getItem("stringSocios")) || (await res.json());
+}
+
+async function buscarSocio(numeroSocio) {
+	arraySocios = await obtenerSocios();
+
+	if (await arraySocios.find((o) => o.socioNumber == numeroSocio)) {
+		let objetoEncontrado = await arraySocios.find((o) => o.socioNumber == numeroSocio);
 		Swal.fire({
-			title: `Bienvenido ${nombre}!`,
+			title: `Bienvenido ${objetoEncontrado.nombre}!`,
 			text: "Modal with a custom image.",
-			imageUrl: `${imagenPerfilURL}`,
+			imageUrl: `${objetoEncontrado.imagenPerfilURL}`,
 			imageWidth: 399,
 			imageHeight: 599,
 			imageAlt: "Custom image",
 		});
+		//nullish coalescing
 	} else {
 		Swal.fire({
 			icon: "error",
